@@ -14,6 +14,9 @@ object Libs {
 
     // Test
     const val JUNIT_VERSION = "4.13.2"
+    const val MOCKITO_CORE_VERSION = "3.11.2"
+    const val MOCKK_VERSION = "1.11.0"
+    const val ARCH_CORE_VERSION = "2.1.0"
 
 
 }

@@ -20,7 +20,3 @@ allprojects {
 //        jcenter() // Warning: this repository is going to shut down soon
     }
 }
-//
-//tasks.clean(Delete::class) {
-//    delete(rootProject.buildDir)
-//}

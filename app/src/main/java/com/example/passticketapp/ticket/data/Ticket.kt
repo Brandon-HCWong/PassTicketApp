@@ -23,7 +23,7 @@ class Ticket(
         EXPIRED
     }
 
-    private val dateFormat = SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.getDefault())
+    private val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
 
     fun isActivated() = activatedTimeMillis > 0
 
@@ -34,12 +34,10 @@ class Ticket(
             return when (type) {
                 Type.DAY_PASS -> {
                     val validDuration = TimeUnit.DAYS.convert(durationTimeHours, TimeUnit.HOURS)
-                    Log.d("BrandonDebug", "[isExpired] DAY_PASS day diff = ${TimeUnit.DAYS.convert(activatedDuration, TimeUnit.MILLISECONDS)}")
                     TimeUnit.DAYS.convert(activatedDuration, TimeUnit.MILLISECONDS) > validDuration
                 }
                 Type.HOUR_PASS -> {
                     val validDuration = TimeUnit.SECONDS.convert(durationTimeHours, TimeUnit.HOURS)
-                    Log.d("BrandonDebug", "[isExpired] HOUR_PASS sec diff = ${TimeUnit.SECONDS.convert(activatedDuration, TimeUnit.MILLISECONDS)}")
                     TimeUnit.SECONDS.convert(activatedDuration, TimeUnit.MILLISECONDS) > validDuration
                 }
             }
@@ -93,7 +91,7 @@ class Ticket(
             val expirationTimeMillis = activatedTimeMillis + TimeUnit.MILLISECONDS.convert(durationTimeHours, TimeUnit.HOURS)
             val simpleDateFormat =  when (type) {
                 Type.DAY_PASS -> SimpleDateFormat("yyyy/MM/dd 00:00:00", Locale.getDefault())
-                Type.HOUR_PASS -> SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.getDefault())
+                Type.HOUR_PASS -> SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
             }
             return simpleDateFormat.format(expirationTimeMillis)
         }
@@ -101,7 +99,7 @@ class Ticket(
     }
 
     override fun toString(): String {
-        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.getDefault())
+        val simpleDateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
         val duration = when (type) {
             Type.DAY_PASS -> TimeUnit.DAYS.convert(durationTimeHours, TimeUnit.HOURS)
             Type.HOUR_PASS -> durationTimeHours

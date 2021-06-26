@@ -55,12 +55,10 @@ class TicketRepository {
     val hourPassTicketList = defaultHourPassTicketList
 
     fun addDayPassTicket(ticket: Ticket) {
-        Log.d("BrandonDebug", "[TicketRepository] Add Day Pass : $ticket")
         dayPassTicketList.add(ticket)
     }
 
     fun addHourPassTicket(ticket: Ticket) {
-        Log.d("BrandonDebug", "[TicketRepository] Add Hour Pass : $ticket")
         hourPassTicketList.add(ticket)
     }
 }

@@ -1,6 +1,5 @@
 package com.example.passticketapp.ticket.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.passticketapp.ticket.data.Ticket

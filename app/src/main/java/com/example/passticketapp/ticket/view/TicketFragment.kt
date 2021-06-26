@@ -22,7 +22,7 @@ class TicketFragment : Fragment() {
 
     private var _binding: FragmentTicketBinding? = null
     private val binding get() = _binding!!
-    private val ticketViewModel : TicketViewModel by viewModels<TicketViewModel> {
+    private val ticketViewModel : TicketViewModel by viewModels {
         TicketViewModelFactory(TicketRepository())
     }
 
@@ -30,7 +30,6 @@ class TicketFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        Log.d("BrandonDebug", "[onCreateView]")
         _binding = FragmentTicketBinding.inflate(inflater, container, false)
         binding.viewRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         binding.viewRecycler.adapter = TicketAdaptor(ticketViewModel, viewLifecycleOwner)

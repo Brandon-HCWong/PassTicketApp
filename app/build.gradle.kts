@@ -54,6 +54,9 @@ dependencies {
 
     // Test
     testImplementation("junit:junit:${Libs.JUNIT_VERSION}")
+    testImplementation("org.mockito:mockito-core:${Libs.MOCKITO_CORE_VERSION}")
+    testImplementation("io.mockk:mockk:${Libs.MOCKK_VERSION}")
+    testImplementation("androidx.arch.core:core-testing:${Libs.ARCH_CORE_VERSION}")
     androidTestImplementation("androidx.test.ext:junit:${Libs.ANDROIDX_JUNIT_VERSION}")
     androidTestImplementation("androidx.test.espresso:espresso-core:${Libs.ANDROIDX_ESPRESSO_VERSION}")
 }
