@@ -14,20 +14,6 @@ import org.hamcrest.TypeSafeMatcher
 import java.util.concurrent.TimeoutException
 
 object TestUtils {
-    fun withIndex(matcher: Matcher<View?>, index: Int): Matcher<View?> {
-        return object : TypeSafeMatcher<View?>() {
-            var currentIndex = 0
-            override fun matchesSafely(item: View?): Boolean {
-                return matcher.matches(item) && currentIndex++ == index
-            }
-
-            override fun describeTo(description: Description) {
-                description.appendText(matcher.toString())
-                description.appendText(" with index : $index")
-            }
-        }
-    }
-
     fun withRecyclerView(recyclerViewId: Int) = RecyclerViewMatcher(recyclerViewId)
 
     fun wait(

@@ -5,13 +5,11 @@ import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.example.passticketapp.R
 import com.example.passticketapp.databinding.DialogAddBinding
 import com.example.passticketapp.ticket.data.Ticket
-import com.example.passticketapp.ticket.model.TicketRepository
 import com.example.passticketapp.ticket.viewmodel.TicketViewModel
 import java.util.concurrent.TimeUnit
 
@@ -24,25 +22,12 @@ class AddDialogFragment(private val ticketViewModel: TicketViewModel) : DialogFr
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val viewBinding: DialogAddBinding = DialogAddBinding.inflate(LayoutInflater.from(activity))
-        viewBinding.radioGroupType.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.radio_button_day -> {
-                    Log.d("BrandonDebug", "Dialog Radio = radio_button_day")
-                }
-                R.id.radio_button_hour -> {
-                    Log.d("BrandonDebug", "Dialog Radio = radio_button_hour")
-                }
-            }
-        }
-
         viewBinding.editTextPeriod.setText(DEFAULT_VALUE.toString())
         viewBinding.editTextPeriod.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                Log.d("BrandonDebug", "Dialog beforeTextChanged = $s")
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                Log.d("BrandonDebug", "Dialog onTextChanged = $s")
                 val currentValue = s.toString().toInt()
                 if (viewBinding.radioGroupType.checkedRadioButtonId == R.id.radio_button_hour &&
                     currentValue > MAX_HOUR_PASS_VALUE) {
@@ -51,14 +36,12 @@ class AddDialogFragment(private val ticketViewModel: TicketViewModel) : DialogFr
             }
 
             override fun afterTextChanged(s: Editable) {
-                Log.d("BrandonDebug", "Dialog afterTextChanged = $s")
                 if (s.isEmpty() || s.toString().toInt() < DEFAULT_VALUE) {
                     viewBinding.editTextPeriod.setText(DEFAULT_VALUE.toString())
                 }
             }
         })
 
-        // Use the Builder class for convenient dialog construction
         val dialog = AlertDialog.Builder(requireActivity())
             .setView(viewBinding.root)
             .setPositiveButton(
@@ -66,7 +49,6 @@ class AddDialogFragment(private val ticketViewModel: TicketViewModel) : DialogFr
             ) { dialog, id ->
                 when (viewBinding.radioGroupType.checkedRadioButtonId) {
                     R.id.radio_button_day -> {
-                        Log.d("BrandonDebug", "Dialog Radio = radio_button_day")
                         ticketViewModel.addDayPassTicket(
                             Ticket(
                                 Ticket.Type.DAY_PASS,
@@ -76,7 +58,6 @@ class AddDialogFragment(private val ticketViewModel: TicketViewModel) : DialogFr
                         )
                     }
                     R.id.radio_button_hour -> {
-                        Log.d("BrandonDebug", "Dialog Radio = radio_button_hour")
                         ticketViewModel.addHourPassTicket(
                             Ticket(
                                 Ticket.Type.HOUR_PASS,
@@ -86,7 +67,6 @@ class AddDialogFragment(private val ticketViewModel: TicketViewModel) : DialogFr
                         )
                     }
                 }
-                Log.d("BrandonDebug", "Dialog Add : Period = ${viewBinding.editTextPeriod.text}")
                 dialog.cancel()
             }
             .setNegativeButton(

@@ -1,6 +1,5 @@
 package com.example.passticketapp.ticket.data
 
-import android.util.Log
 import com.example.passticketapp.R
 import com.example.passticketapp.TicketApp
 import java.text.SimpleDateFormat

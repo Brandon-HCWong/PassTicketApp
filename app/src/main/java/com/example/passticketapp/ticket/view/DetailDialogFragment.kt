@@ -9,7 +9,6 @@ import com.example.passticketapp.R
 import com.example.passticketapp.databinding.DialogDetailBinding
 import com.example.passticketapp.ticket.data.Ticket
 import com.example.passticketapp.ticket.viewmodel.TicketViewModel
-import java.util.concurrent.TimeUnit
 
 class DetailDialogFragment(private val ticketViewModel: TicketViewModel, private val ticket: Ticket) : DialogFragment() {
     companion object {

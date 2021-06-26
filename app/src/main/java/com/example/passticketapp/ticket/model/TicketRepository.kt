@@ -1,6 +1,5 @@
 package com.example.passticketapp.ticket.model
 
-import android.util.Log
 import com.example.passticketapp.ticket.data.Ticket
 import java.util.concurrent.TimeUnit
 
