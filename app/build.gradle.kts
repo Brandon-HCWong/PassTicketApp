@@ -52,11 +52,15 @@ dependencies {
     // Annotation Processor
     annotationProcessor("androidx.room:room-compiler:${Libs.ANDROIDX_ROOM_VERSION}")
 
-    // Test
+    // Unit Test
     testImplementation("junit:junit:${Libs.JUNIT_VERSION}")
     testImplementation("org.mockito:mockito-core:${Libs.MOCKITO_CORE_VERSION}")
     testImplementation("io.mockk:mockk:${Libs.MOCKK_VERSION}")
     testImplementation("androidx.arch.core:core-testing:${Libs.ARCH_CORE_VERSION}")
+
+    // UI Test
     androidTestImplementation("androidx.test.ext:junit:${Libs.ANDROIDX_JUNIT_VERSION}")
     androidTestImplementation("androidx.test.espresso:espresso-core:${Libs.ANDROIDX_ESPRESSO_VERSION}")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:${Libs.ANDROIDX_ESPRESSO_CONTRIB_VERSION}")
+
 }

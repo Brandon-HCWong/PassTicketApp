@@ -8,29 +8,34 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.passticketapp.R
 import com.example.passticketapp.TicketApp
+import com.example.passticketapp.databinding.ItemEmptyBinding
 import com.example.passticketapp.databinding.ItemGroupBinding
 import com.example.passticketapp.databinding.ItemTicketBinding
 import com.example.passticketapp.ticket.data.Ticket
 import com.example.passticketapp.ticket.viewmodel.TicketViewModel
 
 class TicketAdaptor(private val ticketViewModel: TicketViewModel, viewLifecycleOwner: LifecycleOwner) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
+        private const val GROUP_SIZE = 2
+        private const val EMPTY_SIZE = 1
+    }
+
     enum class ViewType {
         GROUP,
-        TICKET
+        TICKET,
+        EMPTY
     }
-    private val groupSize = 2
+
     private val dayPassTicketList: ArrayList<Ticket> = ArrayList()
     private val hourPassTicketList: ArrayList<Ticket> = ArrayList()
 
     init {
         ticketViewModel.dayPassTicketList.observe(viewLifecycleOwner, Observer {
-            Log.d("BrandonDebug", "dayPassTicketListObserver notified")
             dayPassTicketList.clear()
             dayPassTicketList.addAll(it)
             notifyDataSetChanged()
         })
         ticketViewModel.hourPassTicketList.observe(viewLifecycleOwner, Observer {
-            Log.d("BrandonDebug", "hourPassTicketListObserver notified")
             hourPassTicketList.clear()
             hourPassTicketList.addAll(it)
             notifyDataSetChanged()
@@ -41,6 +46,9 @@ class TicketAdaptor(private val ticketViewModel: TicketViewModel, viewLifecycleO
         return when(viewType) {
             ViewType.GROUP.ordinal -> GroupViewHolder(
                 ItemGroupBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
+            ViewType.EMPTY.ordinal -> EmptyViewHolder(
+                ItemEmptyBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
             else -> TicketViewHolder(
                 ItemTicketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -65,8 +73,9 @@ class TicketAdaptor(private val ticketViewModel: TicketViewModel, viewLifecycleO
                     viewBinding.textTitle.text = itemView.context.getString(R.string.group_hour_pass)
                 }
             }
+            itemCount - 1 -> {}
             else -> {
-                val actualPosition = position - dayPassTicketList.size - groupSize
+                val actualPosition = position - dayPassTicketList.size - GROUP_SIZE
                 val ticket = hourPassTicketList[actualPosition]
                 onBindTicketViewHolder(holder as TicketViewHolder, ticket)
             }
@@ -76,11 +85,12 @@ class TicketAdaptor(private val ticketViewModel: TicketViewModel, viewLifecycleO
     override fun getItemViewType(position: Int): Int {
         return when (position) {
             0, dayPassTicketList.size + 1 -> ViewType.GROUP.ordinal
+            itemCount - 1 -> ViewType.EMPTY.ordinal
             else -> ViewType.TICKET.ordinal
         }
     }
 
-    override fun getItemCount(): Int = dayPassTicketList.size + hourPassTicketList.size + groupSize
+    override fun getItemCount(): Int = dayPassTicketList.size + hourPassTicketList.size + GROUP_SIZE + EMPTY_SIZE
 
     private fun onBindTicketViewHolder(holder: TicketViewHolder, ticket: Ticket) {
         holder.apply {
@@ -103,7 +113,6 @@ class TicketAdaptor(private val ticketViewModel: TicketViewModel, viewLifecycleO
                 ticket.activatedTimeMillis = System.currentTimeMillis()
                 viewBinding.buttonActivate.isEnabled = false
                 viewBinding.buttonActivate.text = itemView.context.getString(R.string.activated)
-                Log.d("BrandonDebug", "[Click] DAY_PASS ticket = $ticket")
             }
             viewBinding.root.setOnClickListener {
                 TicketApp.currentActivity?.let {
@@ -115,4 +124,5 @@ class TicketAdaptor(private val ticketViewModel: TicketViewModel, viewLifecycleO
 
     private class GroupViewHolder(val viewBinding: ItemGroupBinding) : RecyclerView.ViewHolder(viewBinding.root)
     private class TicketViewHolder(val viewBinding: ItemTicketBinding) : RecyclerView.ViewHolder(viewBinding.root)
+    private class EmptyViewHolder(val viewBinding: ItemEmptyBinding) : RecyclerView.ViewHolder(viewBinding.root)
 }

@@ -10,6 +10,7 @@ object Libs {
     const val ANDROIDX_NAVIGATION_VERSION = "2.3.5"
     const val ANDROIDX_JUNIT_VERSION = "1.1.2"
     const val ANDROIDX_ESPRESSO_VERSION = "3.3.0"
+    const val ANDROIDX_ESPRESSO_CONTRIB_VERSION = "3.3.0"
     const val ANDROIDX_ROOM_VERSION = "2.3.0"
 
     // Test
